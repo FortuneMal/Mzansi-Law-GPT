@@ -1,0 +1,37 @@
+
+    Protection of Personal Information Act (POPIA) - Core Sections
+
+    Section 5: Rights of data subjects
+    A data subject has the right to have his, her or its personal information processed in accordance with the conditions for the lawful processing of personal information, including the right—
+    (a) to be notified that personal information about him, her or it is being collected;
+    (b) to be notified that his, her or its personal information has been accessed or acquired by an unauthorised person;
+    (c) to establish whether a responsible party holds personal information of that data subject and to request access to his, her or its personal information.
+
+    Section 8: Accountability
+    The responsible party must ensure that the conditions set out in this Chapter, and all the measures that give effect to such conditions, are complied with at the time of the determination of the purpose and means of the processing and during the processing itself.
+
+    Section 9: Processing limitation
+    Personal information must be processed—
+    (a) lawfully; and
+    (b) in a reasonable manner that does not infringe the privacy of the data subject.
+
+    Section 10: Lawfulness of processing
+    Personal information may only be processed if, given the purpose for which it is processed, it is adequate, relevant and not excessive.
+
+    Section 11: Consent, justification and objection
+    Personal information may only be processed if—
+    (a) the data subject or a competent person where the data subject is a child consents to the processing;
+    (b) processing is necessary to carry out actions for the conclusion or performance of a contract to which the data subject is party;
+    (c) processing protects a legitimate interest of the data subject;
+    (d) processing is necessary for pursuing the legitimate interests of the responsible party or of a third party to whom the information is supplied.
+
+    Section 14: Retention and restriction of records
+    Records of personal information must not be retained any longer than is necessary for achieving the purpose for which the information was collected or subsequently processed, unless—
+    (a) retention of the record is required or authorised by law;
+    (b) the responsible party reasonably requires the record for lawful purposes related to its functions or activities.
+
+    Section 19: Security measures on integrity and confidentiality of personal information
+    A responsible party must secure the integrity and confidentiality of personal information in its possession or under its control by taking appropriate, reasonable technical and organisational measures to prevent—
+    (a) loss of, damage to or unauthorised destruction of personal information; and
+    (b) unlawful access to or processing of personal information.
+    
