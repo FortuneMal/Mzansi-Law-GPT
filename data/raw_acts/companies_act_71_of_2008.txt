@@ -1,0 +1,34 @@
+COMPANIES ACT 71 OF 2008
+
+Section 1: Definitions
+'company' means a juristic person incorporated in terms of this Act, a domesticated company, or a juristic person that, immediately before the effective date—
+(a) was registered in terms of the Companies Act, 1973 (Act No. 61 of 1973);
+'director' means a member of the board of a company, as contemplated in section 66, or an alternate director of a company and includes any person occupying the position of a director or alternate director, by whatever name designated;
+'shareholder' means the holder of a share issued by a company and who is entered as such in the certificated or uncertificated securities register.
+
+Section 22: Reckless Trading Prohibited
+(1) A company must not carry on its business recklessly, with gross negligence, with intent to defraud any person or for any fraudulent purpose.
+(2) If the Commission has reasonable grounds to believe that a company is engaging in conduct prohibited by subsection (1), or is unable to pay its debts as they become due and payable in the normal course of business, the Commission may issue a notice to the company to show cause why the company should be permitted to continue carrying on its business.
+
+Section 66: Board, Directors and Senior Management
+(1) The business and affairs of a company must be managed by or under the direction of its board, which has the authority to exercise all of the powers and perform any of the functions of the company, except to the extent that this Act or the company's Memorandum of Incorporation provides otherwise.
+
+Section 75: Director's Personal Financial Interests
+(1) A director of a company who has a personal financial interest in respect of a matter to be considered at a meeting of the board, or knows that a related person has a personal financial interest in the matter, must disclose the interest and its general nature before the matter is considered at the meeting.
+
+Section 76: Standards of Directors' Conduct
+(2) A director of a company must not use the position of director, or any information obtained while acting in the capacity of a director—
+(a) to gain an advantage for the director, or for another person other than the company or a wholly-owned subsidiary of the company; or
+(b) to knowingly cause harm to the company or a subsidiary of the company.
+(3) Subject to subsections (4) and (5), a director of a company, when acting in that capacity, must exercise the powers and perform the functions of director—
+(a) in good faith and for a proper purpose;
+(b) in the best interests of the company; and
+(c) with the degree of care, skill and diligence that may reasonably be expected of a person carrying out the same functions in relation to the company as those carried out by that director, and having the general knowledge, skill and experience of that director.
+
+Section 77: Liability of Directors and Prescribed Officers
+(2) A director of a company may be held liable in accordance with the principles of the common law relating to breach of a fiduciary duty, for any loss, damages or costs sustained by the company as a consequence of any breach by the director of a duty contemplated in section 75, 76(2) or 76(3)(a) or (b).
+
+Section 129: Company Resolution to Begin Business Rescue
+(1) Subject to subsection (2)(a), the board of a company may resolve that the company voluntarily begin business rescue proceedings and place the company under supervision, if the board has reasonable grounds to believe that—
+(a) the company is financially distressed; and
+(b) there appears to be a reasonable prospect of rescuing the company.
