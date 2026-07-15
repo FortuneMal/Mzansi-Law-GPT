@@ -4,3 +4,7 @@ __pycache__/
 *.pyc
 qdrant_db/
 .DS_Store
+node_modules/
+.next/
+audit_reports/
+data/uploads/
