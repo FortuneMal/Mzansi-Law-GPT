@@ -51,7 +51,7 @@ export default function LegislationLibrary() {
 
         <div className="flex items-center gap-3 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-300 text-xs font-semibold">
           <Database className="w-4 h-4 text-emerald-400 animate-pulse" />
-          <span>7 Core Statutes Embedded & Active</span>
+          <span>17 Statutes & Cases Embedded & Active</span>
         </div>
       </div>
 
@@ -83,6 +83,16 @@ export default function LegislationLibrary() {
                 {act.key === "CPA" && "Protects consumer transactions against unfair contract terms, cooling-off rescission (direct marketing), and quality warranties."}
                 {act.key === "NCA" && "Prevents reckless lending, limits excessive interest/fees, and governs credit agreements and debt counselling."}
                 {act.key === "CONSTITUTION" && "The supreme law of South Africa, enshrining fundamental human rights, equality, privacy, and administrative justice."}
+                {act.key === "ohsa" && "Ensures safe working environments and outlines employer duties regarding occupational health and safety."}
+                {act.key === "nmwa" && "Establishes the national minimum wage to protect workers from unreasonably low pay."}
+                {act.key === "eea" && "Promotes equal opportunity and fair treatment in employment through the elimination of unfair discrimination."}
+                {act.key === "ppa" && "Regulates property practitioners and mandates property disclosure forms for leases and sales."}
+                {act.key === "ecta" && "Facilitates electronic communications and provides legal recognition to data messages and e-signatures."}
+                {act.key === "popia_regs" && "General Regulations outlining specific compliance framework duties for Information Officers."}
+                {act.key === "lra_harassment_code" && "Code of Good Practice setting out procedures to prevent and eliminate workplace harassment."}
+                {act.key === "ccma_rules" && "Rules governing the conduct of proceedings and dispute resolution before the CCMA."}
+                {act.key === "case_law_concourt" && "Landmark Constitutional Court judgments shaping South African jurisprudence."}
+                {act.key === "case_law_sca" && "Landmark Supreme Court of Appeal judgments setting binding legal precedents."}
               </p>
             </div>
 

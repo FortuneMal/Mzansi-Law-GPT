@@ -314,6 +314,66 @@ Section 33: Just Administrative Action
 (1) Everyone has the right to administrative action that is lawful, reasonable and procedurally fair.
 (2) Everyone whose rights have been adversely affected by administrative action has the right to be given written reasons.
 """
+    },
+    "ohsa": {
+        "title": "Occupational Health and Safety Act 85 of 1993",
+        "filename": "ohsa_act_85_of_1993.txt",
+        "url": "http://www.saflii.org/za/legis/num_act/ohasa1993273/",
+        "fallback_text": "OCCUPATIONAL HEALTH AND SAFETY ACT 85 OF 1993\n\nSection 8: General duties of employers to their employees\n(1) Every employer shall provide and maintain, as far as is reasonably practicable, a working environment that is safe and without risk to the health of his employees.\n"
+    },
+    "nmwa": {
+        "title": "National Minimum Wage Act 9 of 2018",
+        "filename": "nmwa_act_9_of_2018.txt",
+        "url": "http://www.saflii.org/za/legis/num_act/nmwa2018244/",
+        "fallback_text": "NATIONAL MINIMUM WAGE ACT 9 OF 2018\n\nSection 4: National minimum wage\n(1) Every worker is entitled to payment of a wage in an amount no less than the national minimum wage.\n(2) Every employer must pay wages to its workers that is no less than the national minimum wage.\n"
+    },
+    "eea": {
+        "title": "Employment Equity Act 55 of 1998",
+        "filename": "eea_act_55_of_1998.txt",
+        "url": "http://www.saflii.org/za/legis/num_act/eea1998271/",
+        "fallback_text": "EMPLOYMENT EQUITY ACT 55 OF 1998\n\nSection 6: Prohibition of unfair discrimination\n(1) No person may unfairly discriminate, directly or indirectly, against an employee, in any employment policy or practice, on one or more grounds, including race, gender, sex, pregnancy, marital status, family responsibility, ethnic or social origin, colour, sexual orientation, age, disability, religion, HIV status, conscience, belief, political opinion, culture, language, birth or on any other arbitrary ground.\n"
+    },
+    "ppa": {
+        "title": "Property Practitioners Act 22 of 2019",
+        "filename": "ppa_act_22_of_2019.txt",
+        "url": "http://www.saflii.org/za/legis/num_act/ppa2019313/",
+        "fallback_text": "PROPERTY PRACTITIONERS ACT 22 OF 2019\n\nSection 67: Mandatory disclosure form\n(1) A property practitioner must not accept a mandate unless the owner or lessor of the property has provided him or her with a fully completed and signed mandatory disclosure in the prescribed form.\n"
+    },
+    "ecta": {
+        "title": "Electronic Communications and Transactions Act 25 of 2002",
+        "filename": "ecta_act_25_of_2002.txt",
+        "url": "http://www.saflii.org/za/legis/num_act/ecata2002427/",
+        "fallback_text": "ELECTRONIC COMMUNICATIONS AND TRANSACTIONS ACT 25 OF 2002\n\nSection 11: Legal recognition of data messages\n(1) Information is not without legal force and effect merely on the grounds that it is wholly or partly in the form of a data message.\n"
+    },
+    "popia_regs": {
+        "title": "POPIA General Regulations",
+        "filename": "popia_regulations.txt",
+        "url": "http://www.saflii.org/za/legis/consol_reg/popia4o2013r1383701/",
+        "fallback_text": "POPIA GENERAL REGULATIONS\n\nRegulation 4: Responsibilities of Information Officers\n(1) An information officer must ensure that a compliance framework is developed, implemented, monitored and maintained.\n"
+    },
+    "lra_harassment_code": {
+        "title": "Code of Good Practice on the Prevention and Elimination of Harassment in the Workplace",
+        "filename": "lra_harassment_code.txt",
+        "url": "http://www.saflii.org/za/legis/consol_reg/lra66o1995cogpotpaeohitw915/",
+        "fallback_text": "CODE OF GOOD PRACTICE ON HARASSMENT\n\nItem 4: Test for Harassment\nHarassment is generally understood to be unwanted conduct, which impairs dignity, which creates a hostile or intimidating work environment for one or more employees.\n"
+    },
+    "ccma_rules": {
+        "title": "Rules for the Conduct of Proceedings before the CCMA",
+        "filename": "ccma_rules.txt",
+        "url": "http://www.saflii.org/za/legis/consol_reg/lra66o1995rftcopbtccma744/",
+        "fallback_text": "CCMA RULES\n\nRule 11: How to refer a dispute to the Commission\n(1) A party must refer a dispute to the Commission for conciliation by delivering a completed LRA Form 7.11 ('the referral document').\n"
+    },
+    "case_law_concourt": {
+        "title": "Landmark Constitutional Court Judgments",
+        "filename": "case_law_concourt.txt",
+        "url": "http://www.saflii.org/za/cases/ZACC/",
+        "fallback_text": "LANDMARK CONSTITUTIONAL COURT JUDGMENTS\n\nMahlangu v Minister of Labour (ZACC 24 of 2020)\nRuling: The exclusion of domestic workers from the Compensation for Occupational Injuries and Diseases Act (COIDA) is unconstitutional.\n"
+    },
+    "case_law_sca": {
+        "title": "Landmark Supreme Court of Appeal Judgments",
+        "filename": "case_law_sca.txt",
+        "url": "http://www.saflii.org/za/cases/ZASCA/",
+        "fallback_text": "LANDMARK SUPREME COURT OF APPEAL JUDGMENTS\n\nAfriForum v University of the Free State (ZASCA 171 of 2017)\nRuling: The adoption of a new language policy substituting English as the primary medium of instruction was lawful and constitutional.\n"
     }
 }
 
