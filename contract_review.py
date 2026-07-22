@@ -131,18 +131,20 @@ def audit_contract_domain(domain_name: str, domain_description: str, contract_te
     
     system_prompt = """
 You are 'Mzansi Law GPT', a Senior South African Statutory Compliance Auditor and Legal Specialist.
-Your task is to conduct a rigorous legal review of the provided Contract Excerpts against South African Legislation (specifically BCEA, POPIA, CPA, Companies Act, or LRA depending on the contract type).
+Your task is to conduct a rigorous legal review of the provided Contract Excerpts against South African Legislation.
 
 Instructions:
 1. Examine every clause in the contract text against the retrieved South African statutory context AND your authoritative knowledge of South African law.
-2. Identify ANY clause or omission that violates South African law (e.g., working hours over 45 hours/week, overtime pay less than 1.5x, annual leave less than 21 consecutive days/17 worked days, indefinite data retention without consent, unlawful deductions, unfair consumer disclaimers).
-3. Output your response EXACTLY in the following structured format (if multiple issues are found in this domain, list them as Finding 1, Finding 2, etc.):
-
-### FINDING STATUS: [COMPLIANT] or [NON-COMPLIANT / VIOLATION] or [RISK / REQUIRES CLARIFICATION]
-**Statutory Authority:** [Cite exact Act and Section, e.g., Basic Conditions of Employment Act 75 of 1997, Section 9 & 10]
-**Contract Clause / Issue:** [Quote or summarize the exact problematic wording from the contract]
-**Legal Compliance Analysis:** [Explain clearly why this violates or complies with South African legislation]
-**Recommended Redline Amendment:** [Provide exact replacement wording or clause addition that ensures 100% statutory compliance]
+2. Identify ANY clause or omission that violates South African law.
+3. Output your response EXACTLY as a valid JSON object (do NOT wrap it in markdown blockquotes like ```json). Use the following schema:
+{
+  "status": "COMPLIANT" | "NON-COMPLIANT" | "RISK",
+  "statutory_authority": "Cite exact Act and Section, e.g., Basic Conditions of Employment Act 75 of 1997, Section 9 & 10",
+  "contract_clause": "Quote or summarize the exact problematic wording from the contract",
+  "legal_analysis": "Explain clearly why this violates or complies with South African legislation",
+  "citizen_explanation": "Explain what this means to a regular citizen in very simple, plain English without legal jargon. Be empathetic and clear.",
+  "recommended_redline": "Provide exact replacement wording or clause addition that ensures 100% statutory compliance"
+}
 """
 
     user_prompt = f"""
@@ -155,7 +157,7 @@ Instructions:
 --- AUDIT INSTRUCTION ---
 Audit the above contract text specifically focusing on: {domain_name} ({domain_description}).
 Identify any unlawful, unfair, or non-compliant terms under South African Law.
-If all clauses within this domain are fully compliant with the law, state FINDING STATUS: [COMPLIANT] and explain why.
+Output ONLY a valid JSON object matching the requested schema.
 """
 
     response = openai_client.chat.completions.create(
@@ -164,20 +166,27 @@ If all clauses within this domain are fully compliant with the law, state FINDIN
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ],
-        temperature=0.1
+        temperature=0.1,
+        response_format={ "type": "json_object" }
     )
     
-    finding_text = response.choices[0].message.content.strip()
-    status = "COMPLIANT"
-    if "NON-COMPLIANT" in finding_text.upper() or "VIOLATION" in finding_text.upper():
-        status = "NON-COMPLIANT"
-    elif "RISK" in finding_text.upper() or "REQUIRES CLARIFICATION" in finding_text.upper():
-        status = "RISK"
-        
+    import json
+    raw_response = response.choices[0].message.content.strip()
+    try:
+        finding_data = json.loads(raw_response)
+        status = finding_data.get("status", "COMPLIANT").upper()
+    except Exception:
+        finding_data = {"error": "Failed to parse JSON", "raw": raw_response}
+        status = "COMPLIANT"
+        if "NON-COMPLIANT" in raw_response.upper() or "VIOLATION" in raw_response.upper():
+            status = "NON-COMPLIANT"
+        elif "RISK" in raw_response.upper() or "REQUIRES CLARIFICATION" in raw_response.upper():
+            status = "RISK"
+            
     return {
         "domain": domain_name,
         "status": status,
-        "analysis": finding_text,
+        "analysis": finding_data,
         "statutory_context_used": statutory_context
     }
 

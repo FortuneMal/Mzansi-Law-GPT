@@ -5,10 +5,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { UploadCloud, FileCheck, AlertTriangle, CheckCircle2, XCircle, ShieldAlert, Download, FileText, ArrowRight, RefreshCw, Layers } from "lucide-react";
 import confetti from "canvas-confetti";
 
+interface FindingAnalysis {
+  status?: string;
+  statutory_authority?: string;
+  contract_clause?: string;
+  legal_analysis?: string;
+  citizen_explanation?: string;
+  recommended_redline?: string;
+  error?: string;
+  raw?: string;
+}
+
 interface Finding {
   domain: string;
   status: "COMPLIANT" | "NON-COMPLIANT" | "RISK";
-  analysis: string;
+  analysis: FindingAnalysis | string;
   statutory_context_used: string;
 }
 
@@ -289,9 +300,42 @@ export default function ContractAuditor() {
                       </span>
                     </div>
 
-                    <div className="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap bg-slate-950/60 p-4 rounded-xl border border-slate-800/60 font-sans">
-                      {fnd.analysis}
-                    </div>
+                    {typeof fnd.analysis === "object" && !("error" in fnd.analysis) ? (
+                      <div className="flex flex-col gap-4 mt-4">
+                        <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800/60">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">The Contract Says:</h4>
+                          <p className="text-sm text-slate-300 font-serif italic border-l-2 border-slate-600 pl-3">"{fnd.analysis.contract_clause}"</p>
+                        </div>
+                        
+                        <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2 flex items-center gap-2">
+                            <ShieldAlert className="w-4 h-4" /> Plain English Explanation
+                          </h4>
+                          <p className="text-sm text-blue-100 leading-relaxed">{fnd.analysis.citizen_explanation}</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800/60">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Legal Analysis</h4>
+                            <p className="text-xs text-slate-300 leading-relaxed">{fnd.analysis.legal_analysis}</p>
+                            <p className="mt-3 text-[11px] font-mono text-slate-500 flex items-center gap-1">
+                              <FileCheck className="w-3.5 h-3.5" /> {fnd.analysis.statutory_authority}
+                            </p>
+                          </div>
+                          
+                          {fnd.status !== "COMPLIANT" && fnd.analysis.recommended_redline && (
+                            <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                              <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Recommended Redline</h4>
+                              <p className="text-xs text-emerald-100/90 leading-relaxed whitespace-pre-wrap">{fnd.analysis.recommended_redline}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap bg-slate-950/60 p-4 rounded-xl border border-slate-800/60 font-sans mt-4">
+                        {typeof fnd.analysis === "object" ? fnd.analysis.raw || fnd.analysis.error : fnd.analysis}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

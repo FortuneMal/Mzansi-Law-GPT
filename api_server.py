@@ -50,7 +50,7 @@ class ChatResponse(BaseModel):
 class AuditFinding(BaseModel):
     domain: str
     status: str  # COMPLIANT, NON-COMPLIANT, RISK
-    analysis: str
+    analysis: dict
     statutory_context_used: str
 
 class AuditResponse(BaseModel):
@@ -268,7 +268,16 @@ async def audit_contract_endpoint(
         rf.write(f"- **Contract Type:** `{contract_type.upper()}`\n")
         rf.write(f"- **Overall Findings:** **{violation_count} Critical Statutory Violation(s)**\n\n---\n\n")
         for fnd in findings:
-            rf.write(f"## Domain: {fnd.domain} | Status: `{fnd.status}`\n\n{fnd.analysis}\n\n---\n\n")
+            rf.write(f"## Domain: {fnd.domain} | Status: `{fnd.status}`\n\n")
+            if isinstance(fnd.analysis, dict) and "error" not in fnd.analysis:
+                rf.write(f"**Statutory Authority:** {fnd.analysis.get('statutory_authority', 'N/A')}\n\n")
+                rf.write(f"**Contract Clause:** {fnd.analysis.get('contract_clause', 'N/A')}\n\n")
+                rf.write(f"**Legal Analysis:** {fnd.analysis.get('legal_analysis', 'N/A')}\n\n")
+                rf.write(f"**Citizen Explanation:** {fnd.analysis.get('citizen_explanation', 'N/A')}\n\n")
+                rf.write(f"**Recommended Redline:** {fnd.analysis.get('recommended_redline', 'N/A')}\n\n")
+            else:
+                rf.write(f"{fnd.analysis}\n\n")
+            rf.write("---\n\n")
 
     if os.path.exists(file_path):
         os.remove(file_path)
