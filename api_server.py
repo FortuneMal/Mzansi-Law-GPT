@@ -30,8 +30,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
 class ChatRequest(BaseModel):
     query: str
+    history: Optional[List[ChatMessage]] = []
     act_filter: Optional[str] = "All Acts"
     collection_name: Optional[str] = "mzansi_law_acts"
     force_local: Optional[bool] = False
@@ -159,13 +164,18 @@ Guidelines:
 Please provide a comprehensive, structured response grounded in the statutory excerpts above.
 """
 
+    messages_payload = [{"role": "system", "content": system_prompt}]
+    
+    # Append conversation history
+    for msg in req.history:
+        messages_payload.append({"role": msg.role, "content": msg.content})
+        
+    messages_payload.append({"role": "user", "content": user_prompt})
+
     openai_client = OpenAI(api_key=openai_api_key)
     completion = openai_client.chat.completions.create(
         model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
+        messages=messages_payload,
         temperature=0.2
     )
 

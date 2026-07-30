@@ -70,11 +70,20 @@ export default function ChatConsultant() {
     setIsLoading(true);
 
     try {
+      const historyPayload = messages
+        .filter(m => m.id !== "welcome")
+        .slice(-8) // Keep last 8 messages for context to avoid token limits
+        .map(m => ({
+          role: m.sender === "user" ? "user" : "assistant",
+          content: m.text
+        }));
+
       const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           query: textToSend,
+          history: historyPayload,
           act_filter: selectedFilter,
           collection_name: "mzansi_law_acts",
           force_local: false

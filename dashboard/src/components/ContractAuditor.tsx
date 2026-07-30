@@ -307,26 +307,26 @@ export default function ContractAuditor() {
                           <p className="text-sm text-slate-300 font-serif italic border-l-2 border-slate-600 pl-3">"{fnd.analysis.contract_clause}"</p>
                         </div>
                         
-                        <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20">
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2 flex items-center gap-2">
-                            <ShieldAlert className="w-4 h-4" /> Plain English Explanation
-                          </h4>
-                          <p className="text-sm text-blue-100 leading-relaxed">{fnd.analysis.citizen_explanation}</p>
+                        <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800/60">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Legal Analysis</h4>
+                          <p className="text-sm text-slate-300 leading-relaxed">{fnd.analysis.legal_analysis}</p>
+                          <p className="mt-3 text-xs font-mono text-slate-500 flex items-center gap-1">
+                            <FileCheck className="w-4 h-4" /> {fnd.analysis.statutory_authority}
+                          </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800/60">
-                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Legal Analysis</h4>
-                            <p className="text-xs text-slate-300 leading-relaxed">{fnd.analysis.legal_analysis}</p>
-                            <p className="mt-3 text-[11px] font-mono text-slate-500 flex items-center gap-1">
-                              <FileCheck className="w-3.5 h-3.5" /> {fnd.analysis.statutory_authority}
-                            </p>
+                          <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2 flex items-center gap-2">
+                              <ShieldAlert className="w-4 h-4" /> Plain English Explanation
+                            </h4>
+                            <p className="text-sm text-blue-100 leading-relaxed">{fnd.analysis.citizen_explanation}</p>
                           </div>
                           
                           {fnd.status !== "COMPLIANT" && fnd.analysis.recommended_redline && (
                             <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
                               <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Recommended Redline</h4>
-                              <p className="text-xs text-emerald-100/90 leading-relaxed whitespace-pre-wrap">{fnd.analysis.recommended_redline}</p>
+                              <p className="text-sm text-emerald-100/90 leading-relaxed whitespace-pre-wrap">{fnd.analysis.recommended_redline}</p>
                             </div>
                           )}
                         </div>
