@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import pypdf
 from dotenv import load_dotenv
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from langchain_core.documents import Document
 
@@ -227,7 +227,7 @@ def scrape_and_chunk_saflii(url, act_name=None):
     print(f"Created {len(legal_documents)} documents from SAFLII ready for vectorization.")
     return legal_documents
 
-def ingest_local_directory(directory_path="data/raw_acts", collection_name="mzansi_law_acts", force_local=False):
+def ingest_local_directory(directory_path="data/raw_acts", collection_name="mzansi_law_acts_v2", force_local=False):
     """Ingests all PDF, TXT, and HTML legal files from a local directory into Qdrant."""
     if not os.path.exists(directory_path):
         print(f"Directory {directory_path} does not exist yet. Creating it...")
@@ -261,10 +261,9 @@ def embed_and_upload_to_qdrant(documents, collection_name="mzansi_law_popia", fo
         print("No documents provided to vectorize.")
         return
 
-    # 100% FREE LOCAL EMBEDDINGS
-    print("Initializing HuggingFace Embeddings (all-MiniLM-L6-v2)...")
-    print("(Note: This may take a minute to download the model the very first time you run it)")
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    # ULTRA-LIGHTWEIGHT CLOUD EMBEDDINGS (No RAM overhead)
+    print("Initializing OpenAI Embeddings...")
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     
     qdrant_url = os.getenv("QDRANT_URL")
     qdrant_api_key = os.getenv("QDRANT_API_KEY")
@@ -292,7 +291,7 @@ if __name__ == "__main__":
     parser.add_argument("--pdf", type=str, help="Ingest a specific PDF legal file")
     parser.add_argument("--dir", type=str, help="Ingest all PDF/TXT files from a directory (default: data/raw_acts)")
     parser.add_argument("--act-name", type=str, help="Optional custom name for the Act being ingested")
-    parser.add_argument("--collection", type=str, default="mzansi_law_acts", help="Target Qdrant collection name")
+    parser.add_argument("--collection", type=str, default="mzansi_law_acts_v2", help="Target Qdrant collection name")
     parser.add_argument("--local", action="store_true", help="Force saving vector store to local disk path ('qdrant_db') instead of Qdrant Cloud")
     
     args = parser.parse_args()

@@ -86,7 +86,7 @@ export default function ChatConsultant() {
           query: textToSend,
           history: historyPayload,
           act_filter: selectedFilter,
-          collection_name: "mzansi_law_acts",
+          collection_name: "mzansi_law_acts_v2",
           force_local: false
         })
       });

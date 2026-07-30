@@ -38,7 +38,7 @@ class ChatRequest(BaseModel):
     query: str
     history: Optional[List[ChatMessage]] = []
     act_filter: Optional[str] = "All Acts"
-    collection_name: Optional[str] = "mzansi_law_acts"
+    collection_name: Optional[str] = "mzansi_law_acts_v2"
     force_local: Optional[bool] = False
 
 class ChatResponseSource(BaseModel):

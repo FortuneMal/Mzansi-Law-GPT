@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import pypdf
 import docx
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 from openai import OpenAI
@@ -88,9 +88,9 @@ def load_contract(file_path: str) -> Tuple[str, List[Dict[str, str]]]:
     print(f"{Colors.GREEN}[SUCCESS] Extracted {len(clauses)} clauses/sections from document.{Colors.ENDC}")
     return full_text, clauses
 
-def get_qdrant_vector_store(collection_name="mzansi_law_acts", force_local=False) -> QdrantVectorStore:
+def get_qdrant_vector_store(collection_name="mzansi_law_acts_v2", force_local=False) -> QdrantVectorStore:
     """Connects to Qdrant Cloud or Local Disk vector store."""
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     qdrant_url = os.getenv("QDRANT_URL")
     qdrant_api_key = os.getenv("QDRANT_API_KEY")
     local_db_path = "qdrant_db"

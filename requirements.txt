@@ -5,7 +5,7 @@ python-dotenv==1.0.1
 openai==1.47.0
 langchain==0.3.0
 langchain-qdrant==0.1.4
-langchain-huggingface==0.1.0
+langchain-openai==0.2.1
 langchain-text-splitters==0.3.0
 qdrant-client==1.11.3
 pypdf==5.0.0
