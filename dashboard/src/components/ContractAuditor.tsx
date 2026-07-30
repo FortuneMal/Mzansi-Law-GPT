@@ -78,7 +78,8 @@ export default function ContractAuditor() {
     formData.append("force_local", "false");
 
     try {
-      const response = await fetch("http://localhost:8000/api/audit", {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const response = await fetch(`${API_BASE_URL}/api/audit`, {
         method: "POST",
         body: formData,
       });
