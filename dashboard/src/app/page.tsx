@@ -24,9 +24,7 @@ export default function Home() {
                 <h1 className="text-xl font-black tracking-tight text-white flex items-center gap-1.5">
                   MZANSI LAW <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">GPT</span>
                 </h1>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                  v2.0 AI Platform
-                </span>
+
               </div>
               <p className="text-xs text-slate-400">South African Legislation RAG & Statutory Compliance Engine</p>
             </div>

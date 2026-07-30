@@ -109,7 +109,7 @@ export default function ChatConsultant() {
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: "bot",
-        text: `⚠️ **Connection Error**: Could not connect to the Mzansi Law API (` + err.message + `). Make sure your backend server (` + `python api_server.py` + `) is running on port 8000.`,
+        text: `⚠️ **Connection Error**: Could not connect to the Mzansi Law API (${err.message}). If deploying to Vercel, make sure the NEXT_PUBLIC_API_URL environment variable is set to your Render URL and you have triggered a redeploy.`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
       };
       setMessages(prev => [...prev, errorMsg]);
