@@ -275,7 +275,7 @@ def embed_and_upload_to_qdrant(documents, collection_name="mzansi_law_popia", fo
     else:
         print(f"Uploading to Qdrant Cloud cluster: {collection_name}...")
         try:
-            QdrantVectorStore.from_documents(documents, embeddings, url=qdrant_url, api_key=qdrant_api_key, collection_name=collection_name)
+            QdrantVectorStore.from_documents(documents, embeddings, url=qdrant_url, api_key=qdrant_api_key, collection_name=collection_name, timeout=60)
             print("Successfully uploaded to Qdrant Cloud!")
         except Exception as e:
             print(f"[WARNING] Could not connect to Qdrant Cloud ({e}). Falling back to local disk storage...")

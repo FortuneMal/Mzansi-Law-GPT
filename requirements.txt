@@ -3,6 +3,7 @@ uvicorn==0.30.6
 pydantic==2.9.2
 python-dotenv==1.0.1
 openai==1.47.0
+httpx==0.27.2  # openai 1.47 passes `proxies`, which httpx 0.28 removed
 langchain==0.3.0
 langchain-qdrant==0.1.4
 langchain-openai==0.2.1

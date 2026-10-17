@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, User, BookOpen, ShieldCheck, Sparkles, AlertCircle, ChevronDown, ChevronUp, FileText } from "lucide-react";
 
@@ -26,6 +26,8 @@ const PRESET_QUESTIONS = [
   "Is a residential lease clause legal if it forfeits 100% of my deposit upon early cancellation under the CPA?"
 ];
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 const ACT_FILTERS = [
   "All Acts",
   "Basic Conditions of Employment Act",
@@ -49,6 +51,11 @@ export default function ChatConsultant() {
   const [selectedFilter, setSelectedFilter] = useState("All Acts");
   const [isLoading, setIsLoading] = useState(false);
   const [expandedSources, setExpandedSources] = useState<Record<string, boolean>>({});
+
+  // Wake the backend (Render free tier sleeps when idle) as soon as the page loads
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/health`).catch(() => {});
+  }, []);
 
   const toggleSource = (msgId: string) => {
     setExpandedSources(prev => ({ ...prev, [msgId]: !prev[msgId] }));
@@ -78,8 +85,7 @@ export default function ChatConsultant() {
           content: m.text
         }));
 
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-      const response = await fetch(`${API_BASE_URL}/api/chat`, {
+      const response = await fetch(`${API_BASE_URL}/api/chat/stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -91,20 +97,51 @@ export default function ChatConsultant() {
         })
       });
 
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         throw new Error(`Server error: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      const botMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: "bot",
-        text: data.answer,
-        sources: data.sources,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      };
+      const botId = (Date.now() + 1).toString();
+      const updateBot = (patch: (m: Message) => Message) =>
+        setMessages(prev => prev.map(m => (m.id === botId ? patch(m) : m)));
 
-      setMessages(prev => [...prev, botMsg]);
+      // Read newline-delimited JSON events and render the answer as it streams in
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let started = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          const event = JSON.parse(line);
+
+          if (event.type === "sources") {
+            started = true;
+            setMessages(prev => [...prev, {
+              id: botId,
+              sender: "bot",
+              text: "",
+              sources: event.sources,
+              timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+            }]);
+          } else if (event.type === "delta") {
+            updateBot(m => ({ ...m, text: m.text + event.content }));
+          } else if (event.type === "error") {
+            updateBot(m => ({ ...m, text: m.text + `\n\n⚠️ **Generation interrupted**: ${event.detail}` }));
+          }
+        }
+      }
+
+      if (!started) {
+        throw new Error("Empty response from server");
+      }
     } catch (err: any) {
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -252,7 +289,8 @@ export default function ChatConsultant() {
           </motion.div>
         ))}
 
-        {isLoading && (
+        {/* Show the spinner only until the streamed answer bubble appears */}
+        {isLoading && messages[messages.length - 1]?.sender === "user" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4 items-center">
             <div className="w-10 h-10 rounded-xl bg-blue-600/30 flex items-center justify-center text-blue-400 animate-pulse">
               <Bot className="w-6 h-6" />

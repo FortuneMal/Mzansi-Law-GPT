@@ -1,10 +1,13 @@
 import os
+import json
 import shutil
 import uuid
+from functools import lru_cache
 from typing import List, Optional
 from datetime import datetime
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -88,17 +91,33 @@ def get_available_acts():
         })
     return {"total_acts": len(acts_list), "acts": acts_list}
 
-@app.post("/api/chat", response_model=ChatResponse)
-def chat_with_legal_consultant(req: ChatRequest):
-    """Interactive multi-turn/single-turn chat endpoint with statutory source citations."""
+CHAT_MODEL = "gpt-4o-mini"
+
+@lru_cache(maxsize=1)
+def get_openai_client() -> OpenAI:
+    """Shared OpenAI client so HTTP connections are reused across requests."""
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    if not openai_api_key:
+        raise RuntimeError("OPENAI_API_KEY is missing in .env file.")
+    return OpenAI(api_key=openai_api_key, timeout=60, max_retries=1)
+
+@app.on_event("startup")
+def warm_up_clients():
+    """Connect to Qdrant and OpenAI at boot so the first chat request doesn't pay the setup cost."""
+    try:
+        get_openai_client()
+        # Must match the call in build_chat_context exactly, or lru_cache treats it as a different key
+        default_req = ChatRequest(query="")
+        get_qdrant_vector_store(collection_name=default_req.collection_name, force_local=default_req.force_local)
+    except Exception as e:
+        print(f"[WARN] Warm-up failed (will retry on first request): {e}")
+
+def build_chat_context(req: ChatRequest):
+    """Retrieves statutory sources and builds the OpenAI messages payload for a chat request."""
     try:
         vector_store = get_qdrant_vector_store(collection_name=req.collection_name, force_local=req.force_local)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to connect to Qdrant Vector Store: {str(e)}")
-
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    if not openai_api_key:
-        raise HTTPException(status_code=500, detail="OPENAI_API_KEY is missing in .env file.")
 
     # Apply Act filter if specified
     search_query = req.query
@@ -171,10 +190,22 @@ Please provide a comprehensive, structured response grounded in the statutory ex
         messages_payload.append({"role": msg.role, "content": msg.content})
         
     messages_payload.append({"role": "user", "content": user_prompt})
+    return sources, messages_payload
 
-    openai_client = OpenAI(api_key=openai_api_key)
+def _get_openai_client_or_500() -> OpenAI:
+    try:
+        return get_openai_client()
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/chat", response_model=ChatResponse)
+def chat_with_legal_consultant(req: ChatRequest):
+    """Interactive multi-turn/single-turn chat endpoint with statutory source citations."""
+    openai_client = _get_openai_client_or_500()
+    sources, messages_payload = build_chat_context(req)
+
     completion = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=CHAT_MODEL,
         messages=messages_payload,
         temperature=0.2
     )
@@ -184,6 +215,41 @@ Please provide a comprehensive, structured response grounded in the statutory ex
         answer=answer,
         sources=sources,
         timestamp=datetime.now().isoformat()
+    )
+
+@app.post("/api/chat/stream")
+def chat_with_legal_consultant_stream(req: ChatRequest):
+    """Streaming chat endpoint. Emits newline-delimited JSON events:
+    {"type": "sources", ...}, then {"type": "delta", "content": ...} per token, then {"type": "done"} or {"type": "error"}.
+    """
+    openai_client = _get_openai_client_or_500()
+    sources, messages_payload = build_chat_context(req)
+
+    def event_stream():
+        yield json.dumps({
+            "type": "sources",
+            "sources": [s.model_dump() for s in sources],
+            "timestamp": datetime.now().isoformat()
+        }) + "\n"
+        try:
+            stream = openai_client.chat.completions.create(
+                model=CHAT_MODEL,
+                messages=messages_payload,
+                temperature=0.2,
+                stream=True
+            )
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    yield json.dumps({"type": "delta", "content": chunk.choices[0].delta.content}) + "\n"
+            yield json.dumps({"type": "done"}) + "\n"
+        except Exception as e:
+            yield json.dumps({"type": "error", "detail": str(e)}) + "\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="application/x-ndjson",
+        # Stop proxies (e.g. Render) from buffering the stream
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
     )
 
 @app.post("/api/audit", response_model=AuditResponse)
@@ -248,10 +314,12 @@ async def audit_contract_endpoint(
             os.remove(file_path)
         raise HTTPException(status_code=500, detail=f"Vector store connection failure: {str(e)}")
 
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    if not openai_api_key:
-        raise HTTPException(status_code=500, detail="OPENAI_API_KEY missing in .env")
-    openai_client = OpenAI(api_key=openai_api_key)
+    try:
+        openai_client = get_openai_client()
+    except RuntimeError as e:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        raise HTTPException(status_code=500, detail=str(e))
 
     findings = []
     violation_count = 0

@@ -1,6 +1,7 @@
 import os
 import re
 import argparse
+from functools import lru_cache
 from typing import List, Dict, Tuple
 from datetime import datetime
 from dotenv import load_dotenv
@@ -88,9 +89,10 @@ def load_contract(file_path: str) -> Tuple[str, List[Dict[str, str]]]:
     print(f"{Colors.GREEN}[SUCCESS] Extracted {len(clauses)} clauses/sections from document.{Colors.ENDC}")
     return full_text, clauses
 
+@lru_cache(maxsize=8)
 def get_qdrant_vector_store(collection_name="mzansi_law_acts_v2", force_local=False) -> QdrantVectorStore:
-    """Connects to Qdrant Cloud or Local Disk vector store."""
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    """Connects to Qdrant Cloud or Local Disk vector store (cached so connections are reused across requests)."""
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small", timeout=20, max_retries=2)
     qdrant_url = os.getenv("QDRANT_URL")
     qdrant_api_key = os.getenv("QDRANT_API_KEY")
     local_db_path = "qdrant_db"
