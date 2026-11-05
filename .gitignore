@@ -8,3 +8,7 @@ node_modules/
 .next/
 audit_reports/
 data/uploads/
+# Opt-in query logs and local eval outputs (evals/baseline.json is committed)
+logs/
+evals/results/
+.pytest_cache/
