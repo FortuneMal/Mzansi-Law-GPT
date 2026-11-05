@@ -1,8 +1,8 @@
 import os
 import json
 import shutil
+import time
 import uuid
-from functools import lru_cache
 from typing import List, Optional
 from datetime import datetime
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
@@ -15,6 +15,18 @@ from openai import OpenAI
 # Import internal modules
 from download_core_acts import CORE_ACTS
 from contract_review import load_contract, get_qdrant_vector_store, audit_contract_domain
+from rag_core import (
+    CHAT_MODEL,
+    ChatMessage,
+    ChatRequest,
+    ChatResponseSource,
+    VectorStoreConnectionError,
+    generate_answer,
+    get_openai_client,
+    retrieve_sources,
+    stream_answer,
+)
+from query_log import log_rag_event, logging_enabled
 
 load_dotenv()
 
@@ -33,22 +45,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class ChatMessage(BaseModel):
-    role: str
-    content: str
-
-class ChatRequest(BaseModel):
-    query: str
-    history: Optional[List[ChatMessage]] = []
-    act_filter: Optional[str] = "All Acts"
-    collection_name: Optional[str] = "mzansi_law_acts_v2"
-    force_local: Optional[bool] = False
-
-class ChatResponseSource(BaseModel):
-    act: str
-    section: str
-    content: str
-    source_file: str
+# ChatMessage, ChatRequest and ChatResponseSource live in rag_core so the eval harness shares them.
 
 class ChatResponse(BaseModel):
     answer: str
@@ -91,106 +88,24 @@ def get_available_acts():
         })
     return {"total_acts": len(acts_list), "acts": acts_list}
 
-CHAT_MODEL = "gpt-4o-mini"
-
-@lru_cache(maxsize=1)
-def get_openai_client() -> OpenAI:
-    """Shared OpenAI client so HTTP connections are reused across requests."""
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    if not openai_api_key:
-        raise RuntimeError("OPENAI_API_KEY is missing in .env file.")
-    return OpenAI(api_key=openai_api_key, timeout=60, max_retries=1)
-
 @app.on_event("startup")
 def warm_up_clients():
     """Connect to Qdrant and OpenAI at boot so the first chat request doesn't pay the setup cost."""
     try:
         get_openai_client()
-        # Must match the call in build_chat_context exactly, or lru_cache treats it as a different key
+        # Must match the call in rag_core.retrieve_sources exactly, or lru_cache treats it as a different key
         default_req = ChatRequest(query="")
         get_qdrant_vector_store(collection_name=default_req.collection_name, force_local=default_req.force_local)
     except Exception as e:
         print(f"[WARN] Warm-up failed (will retry on first request): {e}")
 
 def build_chat_context(req: ChatRequest):
-    """Retrieves statutory sources and builds the OpenAI messages payload for a chat request."""
+    """Retrieves statutory sources via rag_core and maps vector store failures to HTTP 500.
+    Returns (sources, context_str, messages_payload)."""
     try:
-        vector_store = get_qdrant_vector_store(collection_name=req.collection_name, force_local=req.force_local)
-    except Exception as e:
+        return retrieve_sources(req)
+    except VectorStoreConnectionError as e:
         raise HTTPException(status_code=500, detail=f"Failed to connect to Qdrant Vector Store: {str(e)}")
-
-    # Apply Act filter if specified
-    search_query = req.query
-    if req.act_filter and req.act_filter != "All Acts":
-        search_query = f"{req.act_filter}: {req.query}"
-
-    results = vector_store.similarity_search(search_query, k=4)
-    sources = []
-    context_blocks = []
-    
-    for doc in results:
-        act_title = doc.metadata.get("act", "South African Legislation")
-        section_num = doc.metadata.get("section", "N/A")
-        src_file = doc.metadata.get("source", "N/A")
-        
-        # Filter strictly if act_filter is chosen
-        if req.act_filter and req.act_filter != "All Acts" and req.act_filter.lower() not in act_title.lower():
-            continue
-            
-        sources.append(ChatResponseSource(
-            act=act_title,
-            section=str(section_num),
-            content=doc.page_content.strip(),
-            source_file=src_file
-        ))
-        context_blocks.append(f"Source: {act_title} (Section {section_num})\nContent:\n{doc.page_content}")
-
-    if not sources and results:
-        # If filtering excluded all, fallback to all results
-        for doc in results:
-            act_title = doc.metadata.get("act", "South African Legislation")
-            section_num = doc.metadata.get("section", "N/A")
-            src_file = doc.metadata.get("source", "N/A")
-            sources.append(ChatResponseSource(
-                act=act_title,
-                section=str(section_num),
-                content=doc.page_content.strip(),
-                source_file=src_file
-            ))
-            context_blocks.append(f"Source: {act_title} (Section {section_num})\nContent:\n{doc.page_content}")
-
-    context_str = "\n\n---\n\n".join(context_blocks) if context_blocks else "No relevant statutory sections found in the current vector store."
-
-    system_prompt = """
-You are 'Mzansi Law GPT', a state-of-the-art South African AI Legal Advisor & Statutory Consultant.
-Your task is to provide accurate, authoritative, structured, and helpful answers grounded STRICTLY in the provided South African legislation context.
-
-Guidelines:
-1. Always cite exact Acts and Section numbers when explaining rules or rights.
-2. Structure your response with clean formatting (bullet points, bold headings, and clear step-by-step reasoning).
-3. If the provided context does not cover the question fully, state clearly what is supported by the context and suggest verifying on SAFLII (http://www.saflii.org/) or consulting a South African labor/commercial attorney.
-4. Maintain a professional, accessible, and empathetic South African tone ("Mzansi").
-5. Conclude with a brief standard AI legal disclaimer.
-"""
-
-    user_prompt = f"""
---- RETRIEVED SOUTH AFRICAN LEGISLATION CONTEXT ---
-{context_str}
-
---- USER QUESTION ---
-{req.query}
-
-Please provide a comprehensive, structured response grounded in the statutory excerpts above.
-"""
-
-    messages_payload = [{"role": "system", "content": system_prompt}]
-    
-    # Append conversation history
-    for msg in req.history:
-        messages_payload.append({"role": msg.role, "content": msg.content})
-        
-    messages_payload.append({"role": "user", "content": user_prompt})
-    return sources, messages_payload
 
 def _get_openai_client_or_500() -> OpenAI:
     try:
@@ -198,19 +113,45 @@ def _get_openai_client_or_500() -> OpenAI:
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+def _error_text(e: Exception) -> str:
+    detail = getattr(e, "detail", None)
+    return f"{type(e).__name__}: {detail if detail is not None else e}"
+
+def _log_chat(endpoint: str, req: ChatRequest, sources, answer, started: float, error: Optional[str]) -> None:
+    """Builds the query-log event for a chat request. No-op unless MZANSI_LOG_QUERIES=1; never raises."""
+    if not logging_enabled():
+        return
+    try:
+        log_rag_event({
+            "timestamp": datetime.now().astimezone().isoformat(),
+            "endpoint": endpoint,
+            "query": req.query,
+            "act_filter": req.act_filter,
+            "collection": req.collection_name,
+            "sources": [{"act": s.act, "section": s.section} for s in sources],
+            "answer": answer,
+            "model": CHAT_MODEL,
+            "latency_ms": round((time.perf_counter() - started) * 1000, 1),
+            "error": error,
+        })
+    except Exception:
+        pass
+
 @app.post("/api/chat", response_model=ChatResponse)
 def chat_with_legal_consultant(req: ChatRequest):
     """Interactive multi-turn/single-turn chat endpoint with statutory source citations."""
-    openai_client = _get_openai_client_or_500()
-    sources, messages_payload = build_chat_context(req)
+    started = time.perf_counter()
+    sources, answer, error = [], None, None
+    try:
+        openai_client = _get_openai_client_or_500()
+        sources, _context, messages_payload = build_chat_context(req)
+        answer = generate_answer(messages_payload, openai_client)
+    except Exception as e:
+        error = _error_text(e)
+        raise
+    finally:
+        _log_chat("/api/chat", req, sources, answer, started, error)
 
-    completion = openai_client.chat.completions.create(
-        model=CHAT_MODEL,
-        messages=messages_payload,
-        temperature=0.2
-    )
-
-    answer = completion.choices[0].message.content.strip()
     return ChatResponse(
         answer=answer,
         sources=sources,
@@ -222,28 +163,38 @@ def chat_with_legal_consultant_stream(req: ChatRequest):
     """Streaming chat endpoint. Emits newline-delimited JSON events:
     {"type": "sources", ...}, then {"type": "delta", "content": ...} per token, then {"type": "done"} or {"type": "error"}.
     """
-    openai_client = _get_openai_client_or_500()
-    sources, messages_payload = build_chat_context(req)
+    started = time.perf_counter()
+    try:
+        openai_client = _get_openai_client_or_500()
+        sources, _context, messages_payload = build_chat_context(req)
+    except Exception as e:
+        _log_chat("/api/chat/stream", req, [], None, started, _error_text(e))
+        raise
 
     def event_stream():
-        yield json.dumps({
-            "type": "sources",
-            "sources": [s.model_dump() for s in sources],
-            "timestamp": datetime.now().isoformat()
-        }) + "\n"
+        parts = []
+        error = None
+        completed = False
         try:
-            stream = openai_client.chat.completions.create(
-                model=CHAT_MODEL,
-                messages=messages_payload,
-                temperature=0.2,
-                stream=True
-            )
-            for chunk in stream:
-                if chunk.choices and chunk.choices[0].delta.content:
-                    yield json.dumps({"type": "delta", "content": chunk.choices[0].delta.content}) + "\n"
-            yield json.dumps({"type": "done"}) + "\n"
-        except Exception as e:
-            yield json.dumps({"type": "error", "detail": str(e)}) + "\n"
+            yield json.dumps({
+                "type": "sources",
+                "sources": [s.model_dump() for s in sources],
+                "timestamp": datetime.now().isoformat()
+            }) + "\n"
+            try:
+                for delta in stream_answer(messages_payload, openai_client):
+                    parts.append(delta)
+                    yield json.dumps({"type": "delta", "content": delta}) + "\n"
+                completed = True
+                yield json.dumps({"type": "done"}) + "\n"
+            except Exception as e:
+                error = str(e)
+                yield json.dumps({"type": "error", "detail": str(e)}) + "\n"
+        finally:
+            # Logged exactly once: after "done", after "error", or when the client disconnects mid-stream
+            if not completed and error is None:
+                error = "stream closed by client before completion"
+            _log_chat("/api/chat/stream", req, sources, "".join(parts), started, error)
 
     return StreamingResponse(
         event_stream(),
