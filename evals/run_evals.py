@@ -121,7 +121,7 @@ def load_golden(path: str) -> list:
 def _git_revision() -> str:
     try:
         rev = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_ROOT, capture_output=True, text=True, timeout=10).stdout.strip()
-        dirty = subprocess.run(["git", "status", "--porcelain"], cwd=REPO_ROOT, capture_output=True, text=True, timeout=10).stdout.strip()
+        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=REPO_ROOT, capture_output=True, text=True, timeout=10).stdout.strip()
         return rev + ("-dirty" if dirty else "")
     except Exception:
         return "unknown"
