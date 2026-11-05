@@ -175,8 +175,10 @@ the comparison is not like-for-like.
 - **Uncalibrated judge.** The judge is the same model family as the generator, has not been
   compared with human ratings, and can be lenient or inconsistent. Treat its scores as relative
   signals between runs on the same judge prompt. Do not read them as absolute quality, and do not
-  compare runs made with different judge prompts. In two consecutive full runs with the same
-  prompt, the judge-based aggregates moved by up to 0.011. Retrieval metrics did not change.
+  compare runs made with different judge prompts. Over three full runs with the same prompt,
+  overall faithfulness ranged from 0.942 to 0.980 and reference coverage from 0.962 to 0.980.
+  Retrieval metrics were identical. A drop close to the 0.05 gate can therefore be noise. Re-run
+  before concluding there is a regression.
 - **Non-deterministic generation.** Answers use temperature 0.2. Individual out-of-scope
   verdicts can flip between runs (the minimum-wage question has both passed and failed). With
   five out-of-scope questions, one flip moves `abstention_rate` by 0.2 and trips the gate.
