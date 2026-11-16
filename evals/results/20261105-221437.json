@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "run_id": "20261105-221437",
+    "git_revision": "bb45b73-dirty",
+    "collection": "mzansi_law_acts_v2",
+    "backend": "cloud",
+    "collection_points": 35,
+    "chat_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o-mini",
+    "retrieval_k": 4,
+    "golden_set_sha256": "753250856c531208c9e3e47bf56099b525874ab87e321fecf8cb0c23d3c2131b",
+    "category_filter": null,
+    "limit": 5
+  },
+  "aggregate": {
+    "n": 5,
+    "completion_rate": 1.0,
+    "act_hit_rate": 1.0,
+    "act_recall": 1.0,
+    "fact_hit": 1.0,
+    "citation_clean_rate": 1.0,
+    "faithfulness": 1.0,
+    "relevance": 1.0,
+    "reference_coverage": 1.0,
+    "abstention_rate": null,
+    "mean_unsupported_claims": 0.0,
+    "pass_rate": 1.0,
+    "mean_latency_ms": 6808.3
+  },
+  "by_category": {
+    "answerable": {
+      "n": 5,
+      "completion_rate": 1.0,
+      "act_hit_rate": 1.0,
+      "act_recall": 1.0,
+      "fact_hit": 1.0,
+      "citation_clean_rate": 1.0,
+      "faithfulness": 1.0,
+      "relevance": 1.0,
+      "reference_coverage": 1.0,
+      "abstention_rate": null,
+      "mean_unsupported_claims": 0.0,
+      "pass_rate": 1.0,
+      "mean_latency_ms": 6808.3
+    }
+  },
+  "results": [
+    {
+      "id": "bcea-ordinary-hours",
+      "category": "answerable",
+      "question": "What is the maximum number of ordinary hours an employer may require me to work in a week and in a day?",
+      "retrieved": [
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "6",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "10",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "22",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "27",
+          "source_file": "bcea_act_75_of_1997.txt"
+        }
+      ],
+      "context": "Source: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 6)\nContent:\nBASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)\n\nSection 6: Regulation of Working Time\n(1) Every employer must regulate the working time of each employee—\n(a) in accordance with the provisions of any Act governing occupational health and safety;\n(b) with due regard to the health and safety of employees;\n(c) with due regard to the Code of Good Practice on the Regulation of Working Time issued under section 87(1)(a); and\n(d) with due regard to the family responsibilities of employees.\n\nSection 9: Ordinary Hours of Work\n(1) Subject to this Chapter, an employer may not require or permit an employee to work more than—\n(a) 45 hours in any week; and\n(b) nine hours in any day if the employee works for five days or fewer in a week; or\n(c) eight hours in any day if the employee works on more than five days in a week.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 10)\nContent:\nSection 10: Overtime\n(1) Subject to this Chapter, an employer may not require or permit an employee to work overtime except in accordance with an agreement.\n(2) An employer may not require or permit an employee to work more than—\n(a) three hours overtime a day; or\n(b) 10 hours overtime a week.\n(3) An employer must pay an employee at least one and one-half times the employee's wage for overtime worked.\n\nSection 20: Annual Leave\n(1) In this Chapter, 'leave cycle' means the period of 12 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior leave cycle.\n(2) An employer must grant to an employee at least—\n(a) 21 consecutive days' annual leave under full remuneration in respect of each annual leave cycle; or\n(b) by agreement, one day of annual leave on full remuneration for every 17 days on which the employee worked or was entitled to be paid.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 22)\nContent:\nSection 22: Sick Leave\n(1) In this Chapter, 'sick leave cycle' means the period of 36 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior sick leave cycle.\n(2) During every sick leave cycle, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks.\n\nSection 25: Maternity Leave\n(1) An employee is entitled to at least four consecutive months' maternity leave.\n(2) An employee may commence maternity leave—\n(a) at any time from four weeks before the expected date of birth, unless otherwise agreed; or\n(b) on a date from which a medical practitioner or a midwife certifies that it is necessary for the employee's health or that of her unborn child.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 27)\nContent:\nSection 27: Family Responsibility Leave\n(1) This section applies to an employee—\n(a) who has been in employment with an employer for longer than four months; and\n(b) who works for at least four days a week for that employer.\n(2) An employer must grant an employee, during each annual leave cycle, at the request of the employee, three days' paid leave, which the employee is entitled to take—\n(a) when the employee's child is born;\n(b) when the employee's child is sick; or\n(c) in the event of the death of—\n(i) the employee's spouse or life partner; or\n(ii) the employee's parent, adoptive parent, grandparent, child, adopted child, grandchild or sibling.",
+      "answer": "**Maximum Ordinary Hours of Work Under the BCEA**\n\nAccording to the **Basic Conditions of Employment Act 75 of 1997 (BCEA)**, the maximum ordinary hours an employer may require an employee to work are clearly defined in **Section 9**. Here’s a structured breakdown:\n\n### Weekly Maximum Ordinary Hours\n- **45 hours per week**: An employer may not require or permit an employee to work more than **45 hours in any week**.\n\n### Daily Maximum Ordinary Hours\n- **For a 5-day work week**: If the employee works for five days or fewer in a week, the maximum ordinary hours are:\n  - **9 hours in any day**.\n  \n- **For a work week exceeding 5 days**: If the employee works on more than five days in a week, the maximum ordinary hours are:\n  - **8 hours in any day**.\n\n### Summary\n- **Maximum Weekly Hours**: 45 hours\n- **Maximum Daily Hours**:\n  - 9 hours (if working 5 days or fewer)\n  - 8 hours (if working more than 5 days)\n\n### Conclusion\nEmployers must adhere to these provisions to ensure compliance with the BCEA. If you have further questions or specific circumstances, it may be beneficial to consult a South African labor attorney or refer to additional resources on SAFLII (http://www.saflii.org/).\n\n**Disclaimer**: This response is for informational purposes only and does not constitute legal advice. For specific legal concerns, please consult a qualified legal professional.",
+      "act_hit": true,
+      "act_recall": 1.0,
+      "fact_hit": 1.0,
+      "missing_facts": [],
+      "citation": {
+        "mentioned": [
+          "bcea"
+        ],
+        "retrieved": [
+          "bcea"
+        ],
+        "cited_not_retrieved": [],
+        "unsupported": [],
+        "clean": true
+      },
+      "retrieval_ms": 1505.7,
+      "latency_ms": 6429.8,
+      "judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "reference_coverage": 1.0,
+        "unsupported_claims": [],
+        "abstained_correctly": null,
+        "rationale": "The answer accurately reflects the provisions of the BCEA regarding maximum ordinary working hours, fully addressing the question asked. All claims made in the answer are supported by the retrieved context."
+      }
+    },
+    {
+      "id": "bcea-overtime-limits",
+      "category": "answerable",
+      "question": "How much overtime can my employer make me work, and what is the minimum rate of pay for overtime?",
+      "retrieved": [
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "10",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "6",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "NATIONAL MINIMUM WAGE ACT 9 OF 2018",
+          "section": "4",
+          "source_file": "nmwa_act_9_of_2018.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "22",
+          "source_file": "bcea_act_75_of_1997.txt"
+        }
+      ],
+      "context": "Source: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 10)\nContent:\nSection 10: Overtime\n(1) Subject to this Chapter, an employer may not require or permit an employee to work overtime except in accordance with an agreement.\n(2) An employer may not require or permit an employee to work more than—\n(a) three hours overtime a day; or\n(b) 10 hours overtime a week.\n(3) An employer must pay an employee at least one and one-half times the employee's wage for overtime worked.\n\nSection 20: Annual Leave\n(1) In this Chapter, 'leave cycle' means the period of 12 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior leave cycle.\n(2) An employer must grant to an employee at least—\n(a) 21 consecutive days' annual leave under full remuneration in respect of each annual leave cycle; or\n(b) by agreement, one day of annual leave on full remuneration for every 17 days on which the employee worked or was entitled to be paid.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 6)\nContent:\nBASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)\n\nSection 6: Regulation of Working Time\n(1) Every employer must regulate the working time of each employee—\n(a) in accordance with the provisions of any Act governing occupational health and safety;\n(b) with due regard to the health and safety of employees;\n(c) with due regard to the Code of Good Practice on the Regulation of Working Time issued under section 87(1)(a); and\n(d) with due regard to the family responsibilities of employees.\n\nSection 9: Ordinary Hours of Work\n(1) Subject to this Chapter, an employer may not require or permit an employee to work more than—\n(a) 45 hours in any week; and\n(b) nine hours in any day if the employee works for five days or fewer in a week; or\n(c) eight hours in any day if the employee works on more than five days in a week.\n\n---\n\nSource: NATIONAL MINIMUM WAGE ACT 9 OF 2018 (Section 4)\nContent:\nNATIONAL MINIMUM WAGE ACT 9 OF 2018\n\nSection 4: National minimum wage\n(1) Every worker is entitled to payment of a wage in an amount no less than the national minimum wage.\n(2) Every employer must pay wages to its workers that is no less than the national minimum wage.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 22)\nContent:\nSection 22: Sick Leave\n(1) In this Chapter, 'sick leave cycle' means the period of 36 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior sick leave cycle.\n(2) During every sick leave cycle, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks.\n\nSection 25: Maternity Leave\n(1) An employee is entitled to at least four consecutive months' maternity leave.\n(2) An employee may commence maternity leave—\n(a) at any time from four weeks before the expected date of birth, unless otherwise agreed; or\n(b) on a date from which a medical practitioner or a midwife certifies that it is necessary for the employee's health or that of her unborn child.",
+      "answer": "**Overtime Regulations under the Basic Conditions of Employment Act (BCEA)**\n\nAccording to the **Basic Conditions of Employment Act 75 of 1997 (BCEA)**, the following rules apply regarding overtime work:\n\n### Maximum Overtime Hours\n- **Daily Limit**: An employer may not require or permit an employee to work more than **three hours of overtime per day**.\n- **Weekly Limit**: An employer may not require or permit an employee to work more than **10 hours of overtime per week**. \n  - **Reference**: Section 10(2) of the BCEA.\n\n### Payment for Overtime\n- **Minimum Rate of Pay**: An employer must pay an employee at least **one and one-half times** the employee's wage for any overtime worked.\n  - **Reference**: Section 10(3) of the BCEA.\n\n### Summary\n- **Maximum Overtime**: \n  - 3 hours per day\n  - 10 hours per week\n- **Overtime Pay Rate**: 1.5 times the regular wage\n\n### Important Considerations\n- Overtime work must be in accordance with an agreement between the employer and employee (Section 10(1)).\n- It is essential to ensure that any overtime worked is documented and agreed upon to avoid disputes.\n\nFor further clarification or specific cases, it is advisable to consult the full text of the BCEA or seek guidance from a South African labor attorney.\n\n**Disclaimer**: This response is for informational purposes only and does not constitute legal advice. For specific legal concerns, please consult a qualified legal professional.",
+      "act_hit": true,
+      "act_recall": 1.0,
+      "fact_hit": 1.0,
+      "missing_facts": [],
+      "citation": {
+        "mentioned": [
+          "bcea"
+        ],
+        "retrieved": [
+          "bcea",
+          "nmwa"
+        ],
+        "cited_not_retrieved": [],
+        "unsupported": [],
+        "clean": true
+      },
+      "retrieval_ms": 2448.6,
+      "latency_ms": 7025.5,
+      "judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "reference_coverage": 1.0,
+        "unsupported_claims": [],
+        "abstained_correctly": null,
+        "rationale": "The answer accurately reflects the provisions of the BCEA regarding overtime work and pay, fully supporting all claims made with the retrieved context."
+      }
+    },
+    {
+      "id": "bcea-annual-leave",
+      "category": "answerable",
+      "question": "How many days of annual leave is an employee entitled to under the Basic Conditions of Employment Act?",
+      "retrieved": [
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "6",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "10",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "22",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "27",
+          "source_file": "bcea_act_75_of_1997.txt"
+        }
+      ],
+      "context": "Source: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 6)\nContent:\nBASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)\n\nSection 6: Regulation of Working Time\n(1) Every employer must regulate the working time of each employee—\n(a) in accordance with the provisions of any Act governing occupational health and safety;\n(b) with due regard to the health and safety of employees;\n(c) with due regard to the Code of Good Practice on the Regulation of Working Time issued under section 87(1)(a); and\n(d) with due regard to the family responsibilities of employees.\n\nSection 9: Ordinary Hours of Work\n(1) Subject to this Chapter, an employer may not require or permit an employee to work more than—\n(a) 45 hours in any week; and\n(b) nine hours in any day if the employee works for five days or fewer in a week; or\n(c) eight hours in any day if the employee works on more than five days in a week.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 10)\nContent:\nSection 10: Overtime\n(1) Subject to this Chapter, an employer may not require or permit an employee to work overtime except in accordance with an agreement.\n(2) An employer may not require or permit an employee to work more than—\n(a) three hours overtime a day; or\n(b) 10 hours overtime a week.\n(3) An employer must pay an employee at least one and one-half times the employee's wage for overtime worked.\n\nSection 20: Annual Leave\n(1) In this Chapter, 'leave cycle' means the period of 12 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior leave cycle.\n(2) An employer must grant to an employee at least—\n(a) 21 consecutive days' annual leave under full remuneration in respect of each annual leave cycle; or\n(b) by agreement, one day of annual leave on full remuneration for every 17 days on which the employee worked or was entitled to be paid.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 22)\nContent:\nSection 22: Sick Leave\n(1) In this Chapter, 'sick leave cycle' means the period of 36 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior sick leave cycle.\n(2) During every sick leave cycle, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks.\n\nSection 25: Maternity Leave\n(1) An employee is entitled to at least four consecutive months' maternity leave.\n(2) An employee may commence maternity leave—\n(a) at any time from four weeks before the expected date of birth, unless otherwise agreed; or\n(b) on a date from which a medical practitioner or a midwife certifies that it is necessary for the employee's health or that of her unborn child.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 27)\nContent:\nSection 27: Family Responsibility Leave\n(1) This section applies to an employee—\n(a) who has been in employment with an employer for longer than four months; and\n(b) who works for at least four days a week for that employer.\n(2) An employer must grant an employee, during each annual leave cycle, at the request of the employee, three days' paid leave, which the employee is entitled to take—\n(a) when the employee's child is born;\n(b) when the employee's child is sick; or\n(c) in the event of the death of—\n(i) the employee's spouse or life partner; or\n(ii) the employee's parent, adoptive parent, grandparent, child, adopted child, grandchild or sibling.",
+      "answer": "**Annual Leave Entitlement under the Basic Conditions of Employment Act**\n\nAccording to the Basic Conditions of Employment Act 75 of 1997 (BCEA), the entitlement to annual leave is clearly outlined in **Section 20**. Here’s a structured breakdown of the provisions:\n\n### **1. Definition of Leave Cycle**\n- A **leave cycle** is defined as a period of **12 months** of employment with the same employer, which begins:\n  - (a) from the employee's commencement of employment; or\n  - (b) upon the completion of the employee's prior leave cycle.\n\n### **2. Minimum Annual Leave Entitlement**\n- An employer must grant an employee at least:\n  - **21 consecutive days** of annual leave under full remuneration for each annual leave cycle.\n  - Alternatively, by agreement, an employee may receive:\n    - **One day of annual leave** on full remuneration for every **17 days** on which the employee worked or was entitled to be paid.\n\n### **Summary of Entitlement**\n- **Standard Entitlement**: 21 consecutive days of paid annual leave per leave cycle.\n- **Alternative Calculation**: 1 day of leave for every 17 days worked.\n\n### **Important Considerations**\n- This entitlement applies to all employees who have completed a full leave cycle with the same employer.\n- Employers and employees may agree on the alternative calculation method, but the minimum standard is 21 days.\n\n### **Conclusion**\nEmployees are entitled to a minimum of **21 consecutive days** of annual leave for each leave cycle, or an alternative calculation based on days worked, as stipulated in **Section 20** of the BCEA.\n\nFor further details or specific situations, it may be beneficial to consult additional resources or a legal professional. You can also verify this information on the South African Legal Information Institute (SAFLII) website at [http://www.saflii.org/](http://www.saflii.org/).\n\n**Disclaimer**: This response is for informational purposes only and does not constitute legal advice. For specific legal issues, please consult a qualified attorney.",
+      "act_hit": true,
+      "act_recall": 1.0,
+      "fact_hit": 1.0,
+      "missing_facts": [],
+      "citation": {
+        "mentioned": [
+          "bcea"
+        ],
+        "retrieved": [
+          "bcea"
+        ],
+        "cited_not_retrieved": [],
+        "unsupported": [],
+        "clean": true
+      },
+      "retrieval_ms": 2047.1,
+      "latency_ms": 6704.2,
+      "judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "reference_coverage": 1.0,
+        "unsupported_claims": [],
+        "abstained_correctly": null,
+        "rationale": "The answer accurately reflects the provisions of the Basic Conditions of Employment Act regarding annual leave entitlements, fully supported by the retrieved context. It directly addresses the question asked."
+      }
+    },
+    {
+      "id": "bcea-sick-leave",
+      "category": "answerable",
+      "question": "How much paid sick leave does an employee get, and over what cycle is it calculated?",
+      "retrieved": [
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "22",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "10",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "27",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "6",
+          "source_file": "bcea_act_75_of_1997.txt"
+        }
+      ],
+      "context": "Source: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 22)\nContent:\nSection 22: Sick Leave\n(1) In this Chapter, 'sick leave cycle' means the period of 36 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior sick leave cycle.\n(2) During every sick leave cycle, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks.\n\nSection 25: Maternity Leave\n(1) An employee is entitled to at least four consecutive months' maternity leave.\n(2) An employee may commence maternity leave—\n(a) at any time from four weeks before the expected date of birth, unless otherwise agreed; or\n(b) on a date from which a medical practitioner or a midwife certifies that it is necessary for the employee's health or that of her unborn child.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 10)\nContent:\nSection 10: Overtime\n(1) Subject to this Chapter, an employer may not require or permit an employee to work overtime except in accordance with an agreement.\n(2) An employer may not require or permit an employee to work more than—\n(a) three hours overtime a day; or\n(b) 10 hours overtime a week.\n(3) An employer must pay an employee at least one and one-half times the employee's wage for overtime worked.\n\nSection 20: Annual Leave\n(1) In this Chapter, 'leave cycle' means the period of 12 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior leave cycle.\n(2) An employer must grant to an employee at least—\n(a) 21 consecutive days' annual leave under full remuneration in respect of each annual leave cycle; or\n(b) by agreement, one day of annual leave on full remuneration for every 17 days on which the employee worked or was entitled to be paid.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 27)\nContent:\nSection 27: Family Responsibility Leave\n(1) This section applies to an employee—\n(a) who has been in employment with an employer for longer than four months; and\n(b) who works for at least four days a week for that employer.\n(2) An employer must grant an employee, during each annual leave cycle, at the request of the employee, three days' paid leave, which the employee is entitled to take—\n(a) when the employee's child is born;\n(b) when the employee's child is sick; or\n(c) in the event of the death of—\n(i) the employee's spouse or life partner; or\n(ii) the employee's parent, adoptive parent, grandparent, child, adopted child, grandchild or sibling.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 6)\nContent:\nBASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)\n\nSection 6: Regulation of Working Time\n(1) Every employer must regulate the working time of each employee—\n(a) in accordance with the provisions of any Act governing occupational health and safety;\n(b) with due regard to the health and safety of employees;\n(c) with due regard to the Code of Good Practice on the Regulation of Working Time issued under section 87(1)(a); and\n(d) with due regard to the family responsibilities of employees.\n\nSection 9: Ordinary Hours of Work\n(1) Subject to this Chapter, an employer may not require or permit an employee to work more than—\n(a) 45 hours in any week; and\n(b) nine hours in any day if the employee works for five days or fewer in a week; or\n(c) eight hours in any day if the employee works on more than five days in a week.",
+      "answer": "**Paid Sick Leave Entitlement in South Africa**\n\nAccording to the **Basic Conditions of Employment Act 75 of 1997 (BCEA)**, specifically **Section 22**, the following provisions apply regarding paid sick leave:\n\n### **1. Sick Leave Cycle**\n- **Definition**: A \"sick leave cycle\" is defined as a period of **36 months** of employment with the same employer.\n  - This cycle begins either:\n    - (a) on the employee's commencement of employment, or\n    - (b) upon the completion of the employee's prior sick leave cycle.\n\n### **2. Entitlement to Paid Sick Leave**\n- During each sick leave cycle, an employee is entitled to:\n  - **Paid sick leave equal to the number of days the employee would normally work during a period of six weeks.**\n  \n### **3. Calculation of Sick Leave**\n- **Example Calculation**:\n  - If an employee works a standard 5-day work week, they would be entitled to **30 days of paid sick leave** over the 36-month cycle (6 weeks x 5 days).\n  - If the employee works a different schedule, the total number of sick leave days would be adjusted accordingly based on their normal working days.\n\n### **Conclusion**\n- Employees should be aware of their sick leave entitlements and the cycle in which it is calculated to ensure they utilize their rights effectively.\n\nFor further details or specific cases, it is advisable to consult the full text of the BCEA or seek guidance from a South African labor attorney.\n\n**Disclaimer**: This response is for informational purposes only and does not constitute legal advice. For specific legal inquiries, please consult a qualified attorney.",
+      "act_hit": true,
+      "act_recall": 1.0,
+      "fact_hit": 1.0,
+      "missing_facts": [],
+      "citation": {
+        "mentioned": [
+          "bcea"
+        ],
+        "retrieved": [
+          "bcea"
+        ],
+        "cited_not_retrieved": [],
+        "unsupported": [],
+        "clean": true
+      },
+      "retrieval_ms": 2251.1,
+      "latency_ms": 6360.8,
+      "judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "reference_coverage": 1.0,
+        "unsupported_claims": [],
+        "abstained_correctly": null,
+        "rationale": "The answer accurately reflects the provisions of the BCEA regarding sick leave, including the definition of the sick leave cycle and the calculation of paid sick leave, fully supported by the retrieved context."
+      }
+    },
+    {
+      "id": "bcea-maternity-leave",
+      "category": "answerable",
+      "question": "How long is maternity leave in South Africa and when may an employee start it?",
+      "retrieved": [
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "22",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "27",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "10",
+          "source_file": "bcea_act_75_of_1997.txt"
+        },
+        {
+          "act": "BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)",
+          "section": "6",
+          "source_file": "bcea_act_75_of_1997.txt"
+        }
+      ],
+      "context": "Source: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 22)\nContent:\nSection 22: Sick Leave\n(1) In this Chapter, 'sick leave cycle' means the period of 36 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior sick leave cycle.\n(2) During every sick leave cycle, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks.\n\nSection 25: Maternity Leave\n(1) An employee is entitled to at least four consecutive months' maternity leave.\n(2) An employee may commence maternity leave—\n(a) at any time from four weeks before the expected date of birth, unless otherwise agreed; or\n(b) on a date from which a medical practitioner or a midwife certifies that it is necessary for the employee's health or that of her unborn child.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 27)\nContent:\nSection 27: Family Responsibility Leave\n(1) This section applies to an employee—\n(a) who has been in employment with an employer for longer than four months; and\n(b) who works for at least four days a week for that employer.\n(2) An employer must grant an employee, during each annual leave cycle, at the request of the employee, three days' paid leave, which the employee is entitled to take—\n(a) when the employee's child is born;\n(b) when the employee's child is sick; or\n(c) in the event of the death of—\n(i) the employee's spouse or life partner; or\n(ii) the employee's parent, adoptive parent, grandparent, child, adopted child, grandchild or sibling.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 10)\nContent:\nSection 10: Overtime\n(1) Subject to this Chapter, an employer may not require or permit an employee to work overtime except in accordance with an agreement.\n(2) An employer may not require or permit an employee to work more than—\n(a) three hours overtime a day; or\n(b) 10 hours overtime a week.\n(3) An employer must pay an employee at least one and one-half times the employee's wage for overtime worked.\n\nSection 20: Annual Leave\n(1) In this Chapter, 'leave cycle' means the period of 12 months' employment with the same employer immediately following—\n(a) an employee's commencement of employment; or\n(b) the completion of that employee's prior leave cycle.\n(2) An employer must grant to an employee at least—\n(a) 21 consecutive days' annual leave under full remuneration in respect of each annual leave cycle; or\n(b) by agreement, one day of annual leave on full remuneration for every 17 days on which the employee worked or was entitled to be paid.\n\n---\n\nSource: BASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA) (Section 6)\nContent:\nBASIC CONDITIONS OF EMPLOYMENT ACT 75 OF 1997 (BCEA)\n\nSection 6: Regulation of Working Time\n(1) Every employer must regulate the working time of each employee—\n(a) in accordance with the provisions of any Act governing occupational health and safety;\n(b) with due regard to the health and safety of employees;\n(c) with due regard to the Code of Good Practice on the Regulation of Working Time issued under section 87(1)(a); and\n(d) with due regard to the family responsibilities of employees.\n\nSection 9: Ordinary Hours of Work\n(1) Subject to this Chapter, an employer may not require or permit an employee to work more than—\n(a) 45 hours in any week; and\n(b) nine hours in any day if the employee works for five days or fewer in a week; or\n(c) eight hours in any day if the employee works on more than five days in a week.",
+      "answer": "**Maternity Leave in South Africa**\n\nAccording to the **Basic Conditions of Employment Act 75 of 1997 (BCEA)**, the provisions regarding maternity leave are outlined in **Section 25**. Here’s a structured breakdown of the relevant information:\n\n### Duration of Maternity Leave\n- **Entitlement**: An employee is entitled to **at least four consecutive months** of maternity leave. \n  - **Reference**: Section 25(1) of the BCEA.\n\n### When to Commence Maternity Leave\n- An employee may start their maternity leave:\n  - **Option 1**: At any time from **four weeks before the expected date of birth**, unless otherwise agreed with the employer.\n  - **Option 2**: On a date certified by a medical practitioner or midwife as necessary for the health of the employee or her unborn child.\n  - **Reference**: Section 25(2) of the BCEA.\n\n### Summary\n- **Maternity Leave Duration**: 4 consecutive months.\n- **Start Date**: \n  - 4 weeks before the expected birth date, or\n  - As certified necessary by a medical professional.\n\nFor further details or specific circumstances, it is advisable to consult the full text of the BCEA or seek guidance from a South African labor attorney.\n\n**Disclaimer**: This response is for informational purposes only and does not constitute legal advice. For specific legal inquiries, please consult a qualified attorney.",
+      "act_hit": true,
+      "act_recall": 1.0,
+      "fact_hit": 1.0,
+      "missing_facts": [],
+      "citation": {
+        "mentioned": [
+          "bcea"
+        ],
+        "retrieved": [
+          "bcea"
+        ],
+        "cited_not_retrieved": [],
+        "unsupported": [],
+        "clean": true
+      },
+      "retrieval_ms": 2547.7,
+      "latency_ms": 7521.2,
+      "judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "reference_coverage": 1.0,
+        "unsupported_claims": [],
+        "abstained_correctly": null,
+        "rationale": "The answer accurately reflects the provisions of the BCEA regarding maternity leave duration and commencement, fully supported by the retrieved context. It directly addresses the question asked."
+      }
+    }
+  ]
+}
