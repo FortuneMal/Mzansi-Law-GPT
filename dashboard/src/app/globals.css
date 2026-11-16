@@ -1,100 +1,175 @@
 @import "tailwindcss";
 
+/* Dark mode follows the data-theme attribute set on <html> by the inline script in layout.tsx. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Components use the semantic Tailwind colours mapped below
+   (bg-surface, text-ink-muted, border-line, ...) and never raw palette values.
+   --------------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Neutrals share the brand's green-grey hue so text, surfaces and accent read as one family. */
+  --canvas: #f3f5f4;
+  --surface: #ffffff;
+  --surface-muted: #ebefed;
+  --surface-sunken: #e3e8e5;
+  --line: #dce2df;
+  --line-strong: #c3ccc8;
+
+  --ink: #16201c;
+  --ink-muted: #48534e;
+  --ink-subtle: #75807b;
+
+  --brand: #0b5d4b;
+  --brand-hover: #084b3c;
+  --brand-soft: #e0efe9;
+  --brand-ink: #094636;
+  --on-brand: #ffffff;
+
+  --success: #17763f;
+  --success-soft: #e6f3eb;
+  --warning: #a65a07;
+  --warning-soft: #fcf1df;
+  --danger: #b4231f;
+  --danger-soft: #fbe9e8;
+
+  --focus: #0b5d4b;
+  --shadow-color: 30 25 15;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Canvas sits a clear step below surfaces so the sidebar, cards and composer separate from the page. */
+  --canvas: #090d0b;
+  --surface: #161e1a;
+  --surface-muted: #1f2824;
+  --surface-sunken: #090d0b;
+  --line: #29332f;
+  --line-strong: #3a4641;
+
+  --ink: #e4ebe7;
+  --ink-muted: #a8b4ae;
+  --ink-subtle: #7a8781;
+
+  --brand: #6cc7ad;
+  --brand-hover: #86d3bd;
+  --brand-soft: #173029;
+  --brand-ink: #9fdcc9;
+  --on-brand: #062019;
+
+  --success: #5fcf8c;
+  --success-soft: #15301f;
+  --warning: #eeb35f;
+  --warning-soft: #352712;
+  --danger: #f08a82;
+  --danger-soft: #3a1918;
+
+  --focus: #74c9b2;
+  --shadow-color: 0 0 0;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-ink: var(--brand-ink);
+  --color-on-brand: var(--on-brand);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-source-serif), ui-serif, Georgia, serif;
+
+  --shadow-card: 0 1px 2px rgb(var(--shadow-color) / 0.06), 0 1px 1px rgb(var(--shadow-color) / 0.04);
+  --shadow-raised: 0 8px 24px -8px rgb(var(--shadow-color) / 0.18), 0 2px 6px rgb(var(--shadow-color) / 0.06);
+}
+
 @layer base {
-  :root {
-    --background: #080d1a;
-    --foreground: #f1f5f9;
-    --card: rgba(15, 23, 42, 0.75);
-    --card-border: rgba(51, 65, 85, 0.6);
-    --primary: #3b82f6;
-    --primary-glow: rgba(59, 130, 246, 0.35);
-    --accent: #10b981;
-    --accent-glow: rgba(16, 185, 129, 0.35);
-    --warning: #f59e0b;
-    --danger: #ef4444;
+  html {
+    background-color: var(--canvas);
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--brand-soft);
+    color: var(--brand-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* Native disclosure marker is replaced by an icon in components. */
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
   }
 }
 
-body {
-  background-color: var(--background);
-  background-image: 
-    radial-gradient(at 15% 15%, rgba(29, 78, 216, 0.18) 0px, transparent 50%),
-    radial-gradient(at 85% 20%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
-  background-attachment: fixed;
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* Custom Glassmorphism */
-.glass-panel {
-  background: var(--card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-.glass-card {
-  background: rgba(30, 41, 59, 0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(71, 85, 105, 0.4);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card:hover {
-  background: rgba(30, 41, 59, 0.75);
-  border-color: rgba(96, 165, 250, 0.5);
-  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15);
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(71, 85, 105, 0.8);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 1);
-}
-
-/* Shimmer animation */
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
   }
 }
 
-.animate-shimmer {
-  position: relative;
-  overflow: hidden;
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
 }
 
-.animate-shimmer::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-100%);
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.08) 20%,
-    rgba(255, 255, 255, 0.15) 60%,
-    rgba(255, 255, 255, 0)
-  );
-  animation: shimmer 2s infinite;
-  content: '';
+/* Blinking caret at the end of the last block of a streaming answer. */
+.streaming-caret:empty::after,
+.streaming-caret > :not(ul, ol):last-child::after,
+.streaming-caret > :is(ul, ol):last-child > li:last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.5ch;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background-color: var(--brand);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
